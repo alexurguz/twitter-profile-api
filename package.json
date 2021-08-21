@@ -1,0 +1,22 @@
+{
+	"name": "twitter-profile-backend",
+	"version": "1.0.0",
+	"description": "Api twitter profile",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "Jackson Yuan",
+	"license": "ISC",
+	"dependencies": {
+		"@aws-sdk/client-dynamodb": "^3.18.0",
+		"@aws-sdk/util-dynamodb": "^3.18.0",
+		"axios": "^0.21.1"
+	},
+	"devDependencies": {
+		"serverless": "^2.55.0",
+		"serverless-iam-roles-per-function": "^3.2.0",
+		"serverless-offline": "^8.0.0"
+	}
+}
