@@ -11,7 +11,7 @@ const createProfile = async (event) => {
     try {
         const body = JSON.parse(event.body);
 		const profileData = profileCreateMapper(body);
-		console.log('ProfileID::',profileData.profileId);
+
 		const profileById = await profileGetByIdCommand.getByIdProfile(profileData.profileId);
 
 		if ( Object.keys(profileById).length > 0 ) {

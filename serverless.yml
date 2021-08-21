@@ -1,6 +1,6 @@
 org: alexurguz
-app: twitter-profile-backend
-service: twitter-profile-backend
+app: twitter-profile-api
+service: twitter-profile-api
 
 provider:
   name: aws
@@ -10,13 +10,12 @@ provider:
   environment:
     DYNAMODB_TABLE_NAME: ${self:custom.profilesTableName}
     PATH_TWITTER_GET_TOKEN: https://api.twitter.com/oauth2/token
-    PATH_TWITTER_GET_TWEETS: https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=twitterapi
+    PATH_TWITTER_GET_TWEETS: https://api.twitter.com/1.1/statuses/user_timeline.json?
+    TWITTER_API_KEY: KRy7l0v8wex3w8Sy5zThai3Ea
+    TWITTER_API_SECRET_KEY: X2eBm0Y21kYEuR74W3Frqc2JVIizOj8Q1EVGatDsEVVEJo0ucu
 
 custom:
-  profilesTableName: profiles-table-${self:provider.stage}
-
-package:
-  excludeDevDependencies: false
+  profilesTableName: profile-table-${self:provider.stage}
 
 plugins:
   - serverless-iam-roles-per-function
@@ -27,7 +26,7 @@ functions:
     handler: src/functions/profile/create.createProfile
     name: create-profile
     memorySize: 128 # mb
-    timeout: 15 # seconds
+    timeout: 20 # seconds
     events:
       - http:
           path: profile
@@ -35,13 +34,14 @@ functions:
     iamRoleStatements:
       - Effect: "Allow"
         Action:
+          - "dynamodb:GetItem"
           - "dynamodb:PutItem"
         Resource: !GetAtt ProfilesTable.Arn
   getProfile:
     handler: src/functions/profile/getById.getByIdProfile
     name: get-profile
     memorySize: 128 # mb
-    timeout: 15 # seconds
+    timeout: 20 # seconds
     events:
       - http:
           path: profile/{profileId}
@@ -55,7 +55,7 @@ functions:
     handler: src/functions/profile/update.updateProfile
     name: update-profile
     memorySize: 128 # mb
-    timeout: 15 # seconds
+    timeout: 20 # seconds
     events:
       - http:
           path: profile/{profileId}
@@ -63,16 +63,31 @@ functions:
     iamRoleStatements:
       - Effect: "Allow"
         Action:
+          - "dynamodb:GetItem"
           - "dynamodb:UpdateItem"
-        Resource: !GetAtt ProfileTable.Arn
+        Resource: !GetAtt ProfilesTable.Arn
   getAllProfiles:
     handler: src/functions/profile/getAll.getAllProfiles
     name: get-all-profiles
     memorySize: 128 # mb
-    timeout: 15 # seconds
+    timeout: 20 # seconds
     events:
       - http:
           path: profiles
+          method: GET
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:Scan"
+        Resource: !GetAtt ProfilesTable.Arn
+  getToken:
+    handler: src/functions/twitter/twitterAuthorization.getToken
+    name: get-token
+    memorySize: 128 # mb
+    timeout: 20 # seconds
+    events:
+      - http:
+          path: twitter
           method: GET
     iamRoleStatements:
       - Effect: "Allow"

@@ -12,7 +12,7 @@ const updateProfile = async (event) => {
         const body = JSON.parse(event.body);
 		const profileData = profileUpdateMapper(body);
 		const profileId = event.pathParameters.profileId
-		console.log('profileId::', profileId);
+
 		const profileById = await profileGetByIdCommand.getByIdProfile(profileId);
 
 		if ( Object.keys(profileById).length === 0 ) {
