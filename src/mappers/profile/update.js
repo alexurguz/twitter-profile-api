@@ -1,6 +1,6 @@
 const profileUpdateMapper = payload => ({
 	name: payload.name,
-	lastName: payload.lastName,
+	screenName: payload.screenName,
 	title: payload.title,
 	image: payload.image,
 	description: payload.description,

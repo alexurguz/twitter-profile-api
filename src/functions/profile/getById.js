@@ -1,4 +1,4 @@
-const profileGetByIdCommand = require('../../commands/profile/getById');
+const profileGetByIdInteractor = require('../../interactors/profile/getById');
 const errorResponse = require('../../utils/errorResponse');
 const successResponse = require('../../utils/successResponse');
 
@@ -7,8 +7,8 @@ const getByIdProfile = async (event) => {
 
     try {
         const profileId = event.pathParameters.profileId;
-		console.log('profileId::',profileId);
-        const getByIdResult = await profileGetByIdCommand.getByIdProfile(profileId);
+
+        const getByIdResult = await profileGetByIdInteractor.getByIdProfile(profileId);
 
         response = successResponse.success('Successfully get profile by id.', getByIdResult);
 
