@@ -1,5 +1,4 @@
-const profileCreateMapper = payload => ({
-	profileId: payload.profileId,
+const profileUpdateMapper = payload => ({
 	name: payload.name,
 	lastName: payload.lastName,
 	title: payload.title,
@@ -8,5 +7,5 @@ const profileCreateMapper = payload => ({
   });
 
   module.exports = {
-	profileCreateMapper
+	profileUpdateMapper
   };

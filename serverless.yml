@@ -1,0 +1,97 @@
+org: alexurguz
+app: twitter-profile-backend
+service: twitter-profile-backend
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: dev
+  region: us-east-1
+  environment:
+    DYNAMODB_TABLE_NAME: ${self:custom.profilesTableName}
+    PATH_TWITTER_GET_TOKEN: https://api.twitter.com/oauth2/token
+    PATH_TWITTER_GET_TWEETS: https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=twitterapi
+
+custom:
+  profilesTableName: profiles-table-${self:provider.stage}
+
+package:
+  excludeDevDependencies: false
+
+plugins:
+  - serverless-iam-roles-per-function
+  - serverless-offline
+
+functions:
+  createProfile:
+    handler: src/functions/profile/create.createProfile
+    name: create-profile
+    memorySize: 128 # mb
+    timeout: 15 # seconds
+    events:
+      - http:
+          path: profile
+          method: POST
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:PutItem"
+        Resource: !GetAtt ProfilesTable.Arn
+  getProfile:
+    handler: src/functions/profile/getById.getByIdProfile
+    name: get-profile
+    memorySize: 128 # mb
+    timeout: 15 # seconds
+    events:
+      - http:
+          path: profile/{profileId}
+          method: GET
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:GetItem"
+        Resource: !GetAtt ProfilesTable.Arn
+  updateProfile:
+    handler: src/functions/profile/update.updateProfile
+    name: update-profile
+    memorySize: 128 # mb
+    timeout: 15 # seconds
+    events:
+      - http:
+          path: profile/{profileId}
+          method: PUT
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:UpdateItem"
+        Resource: !GetAtt ProfileTable.Arn
+  getAllProfiles:
+    handler: src/functions/profile/getAll.getAllProfiles
+    name: get-all-profiles
+    memorySize: 128 # mb
+    timeout: 15 # seconds
+    events:
+      - http:
+          path: profiles
+          method: GET
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:Scan"
+        Resource: !GetAtt ProfilesTable.Arn
+
+resources:
+  Resources:
+    ProfilesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.profilesTableName}
+        AttributeDefinitions:
+          - AttributeName: profileId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: profileId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
