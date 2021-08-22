@@ -87,13 +87,13 @@ To consume the api you must follow the endpoints in the file *`docs/postman/api-
 
 In the project directory, you can run:
 
-### `sls offline`
+### `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to use local endpoints.
 
-### `sls deploy`
+### `npm deploy`
 
-Build and deploy the app in the aws infrastructure
+Build and deploy the app in the aws infrastructure and run the unit tests
 
 Thanks to read!
