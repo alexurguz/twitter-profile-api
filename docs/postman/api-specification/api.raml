@@ -1,0 +1,156 @@
+#%RAML 1.0
+title: twitter profile api
+description: Api rest serverless with node, dynamo and integration with Twitter api
+mediaType: application/json
+
+/profiles:
+  description: Collection of profiles
+  get:
+    description: Get a list of profiles
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "message": "Successfully get all profiles.",
+                "data": [
+                  {
+                    "image": "http://pbs.twimg.com/profile_images/1243718780967997440/diwXwK_q_normal.jpg",
+                    "screenName": "cutu",
+                    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                    "name": "drk",
+                    "title": "The title",
+                    "profileId": "1893658274"
+                  }
+                ]
+              }
+  /{profileId}:
+    description: Profile entity
+    get:
+      description: Get the profile and tweets with `profileId = {profileId}`
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "message": "Successfully get profile by id.",
+                  "data": {
+                    "image": "http://pbs.twimg.com/profile_images/1243718780967997440/diwXwK_q_normal.jpg",
+                    "screenName": "cutu",
+                    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                    "name": "drk",
+                    "title": "The title",
+                    "profileId": "1893658274",
+                    "tweets": [
+                      {
+                          "user": "drk",
+                          "text": "かぁいいおにゃのこはすはすしたい #kawaii_onnanoko_hshs_sitai",
+                          "profile_image": "http://pbs.twimg.com/profile_images/1243718780967997440/diwXwK_q_normal.jpg"
+                      },
+                      {
+                          "user": "drk",
+                          "text": "かぁいいおにゃのこはすはすしたい #kawaii_onnanoko_hshs_sitai",
+                          "profile_image": "http://pbs.twimg.com/profile_images/1243718780967997440/diwXwK_q_normal.jpg"
+                      },
+                      {
+                          "user": "drk",
+                          "text": "かぁいいおにゃのこはすはすしたい #kawaii_onnanoko_hshs_sitai",
+                          "profile_image": "http://pbs.twimg.com/profile_images/1243718780967997440/diwXwK_q_normal.jpg"
+                      },
+                      {
+                          "user": "drk",
+                          "text": "かぁいいおにゃのこはすはすしたい #kawaii_onnanoko_hshs_sitai",
+                          "profile_image": "http://pbs.twimg.com/profile_images/1243718780967997440/diwXwK_q_normal.jpg"
+                      },
+                      {
+                          "user": "drk",
+                          "text": "かぁいいおにゃのこはすはすしたい #kawaii_onnanoko_hshs_sitai",
+                          "profile_image": "http://pbs.twimg.com/profile_images/1243718780967997440/diwXwK_q_normal.jpg"
+                      }
+                    ]
+                  }
+                }
+        409:
+          body:
+            application/json:
+              example: |
+                {
+                  "message": "Failed to get profile by id.",
+                  "errorMsg": "The profile does not exists"
+                }
+  post:
+    description: Save a profile.
+    body:
+      application/json:
+        example: |
+          {
+            "profileId" : "12212",
+            "name": "name",
+            "screenName": "test",
+            "image" : "http://pbs.twimg.com/profile_images/1243718780967997440/image.jpg",
+            "title": "The title",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "message": "Successfully created profile.",
+                "data": {
+                  "profileId" : "12212",
+                  "name": "name",
+                  "screenName": "test",
+                  "image" : "http://pbs.twimg.com/profile_images/1243718780967997440/image.jpg",
+                  "title": "The title",
+                  "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
+                }
+              }
+      409:
+          body:
+            application/json:
+              example: |
+                {
+                  "message": "Failed to create profile.",
+                  "errorMsg": "The profile already exists"
+                }
+  /{profileId}:
+    description: Profile entity
+    put:
+      description: Update a profile.
+      body:
+        application/json:
+          example: |
+            {
+              "name": "name",
+              "screenName": "test",
+              "image" : "http://pbs.twimg.com/profile_images/1243718780967997440/image.jpg",
+              "title": "The title",
+              "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
+            }
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "message": "Successfully updated profile.",
+                  "data": {
+                    "name": "name",
+                    "screenName": "test",
+                    "image" : "http://pbs.twimg.com/profile_images/1243718780967997440/image.jpg",
+                    "title": "The title",
+                    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
+                  }
+                }
+        409:
+            body:
+              application/json:
+                example: |
+                  {
+                      "message": "Failed to upadte profile.",
+                      "errorMsg": "The profile does not exists"
+                  }
