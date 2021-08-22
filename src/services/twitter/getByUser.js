@@ -15,7 +15,7 @@ const getByUser = async (userId, screenName) => {
 			method: 'GET'
 		};
 		const urlParams = `&count=${DEFAULT_COUNT_TWEETS}&screen_name=${screenName}&user_id=${userId}&exclude_replies=true`;
-		console.log('urlParams::',urlParams);
+
 		const usersTwitter = await fetch(`${process.env.PATH_TWITTER_GET_TWEETS}${urlParams}`, options);
 
 		const usersTwitterJSON = await usersTwitter.json();
