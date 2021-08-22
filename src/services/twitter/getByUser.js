@@ -1,6 +1,6 @@
 
 const authorization = require('./authorization');
-const { DEFAULT_COUNT_TWEETS } = require('../../helpers/constants');
+const { DEFAULT_COUNT_TWEETS } = require('../../utils/constants');
 const fetch = require('node-fetch');
 const errors = require('../../errors');
 
