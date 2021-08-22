@@ -1,5 +1,6 @@
-const profileCreateCommand = require('../../commands/profile/create');
-const profileGetByIdCommand = require('../../commands/profile/getById');
+const db = require("../../db/db");
+const profileCreateCommand = require('../../commands/profile/create')(db);
+const profileGetByIdCommand = require('../../commands/profile/getById')(db);
 const { profileCreateMapper } = require('../../mappers/profile/create');
 const errors = require("../../errors");
 const errorResponse = require('../../utils/errorResponse');

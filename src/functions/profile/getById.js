@@ -1,4 +1,5 @@
-const profileGetByIdInteractor = require('../../interactors/profile/getById');
+const db = require("../../db/db");
+const profileGetByIdInteractor = require('../../interactors/profile/getById')(db);
 const errors = require("../../errors");
 const errorResponse = require('../../utils/errorResponse');
 const successResponse = require('../../utils/successResponse');
