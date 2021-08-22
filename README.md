@@ -100,9 +100,9 @@ Build and deploy the app in the aws infrastructure and run the unit tests
 
 Time spent
 
-Case analysis 3 hours 
-Twitter api review and proof of concept for this 2 hours 
-Backend project 16 hours
-Documentation 3 hours
+Case analysis 3 hours, 
+Twitter api review and proof of concept for this 2 hours, 
+Backend project 16 hours,
+Documentation 3 hours,
 
 Thanks to read!
