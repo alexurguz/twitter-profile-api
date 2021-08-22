@@ -80,20 +80,6 @@ functions:
         Action:
           - "dynamodb:Scan"
         Resource: !GetAtt ProfilesTable.Arn
-  getToken:
-    handler: src/functions/twitter/twitterAuthorization.getToken
-    name: get-token
-    memorySize: 128 # mb
-    timeout: 20 # seconds
-    events:
-      - http:
-          path: twitter
-          method: GET
-    iamRoleStatements:
-      - Effect: "Allow"
-        Action:
-          - "dynamodb:Scan"
-        Resource: !GetAtt ProfilesTable.Arn
 
 resources:
   Resources:
