@@ -1,6 +1,6 @@
 # Twitter-profile-api
 
-A serverless AWS project that allows getting the information of a user's profile and the list of associated tweets.
+A serverless AWS project that allows getting the information of a user's profile and the list of associated tweets, developed with NodeJs, Aws services (Api Gateway, DynamoDB, S3, IAM users, CloudFormation, Lambda, CloudWatch), Github CI/CD, Postman, raml2html (document api)
 
     .
     ├── .github                  # Compiled files (alternatively `dist`)
@@ -95,5 +95,14 @@ Open [http://localhost:3000](http://localhost:3000) to use local endpoints.
 ### `npm deploy`
 
 Build and deploy the app in the aws infrastructure and run the unit tests
+
+## Time used 
+
+Time spent
+
+Case analysis 3 hours 
+Twitter api review and proof of concept for this 2 hours 
+Backend project 16 hours
+Documentation 3 hours
 
 Thanks to read!
