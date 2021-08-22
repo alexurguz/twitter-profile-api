@@ -1,4 +1,5 @@
 const profileGetByIdInteractor = require('../../interactors/profile/getById');
+const errors = require("../../errors");
 const errorResponse = require('../../utils/errorResponse');
 const successResponse = require('../../utils/successResponse');
 
@@ -9,6 +10,10 @@ const getByIdProfile = async (event) => {
         const profileId = event.pathParameters.profileId;
 
         const getByIdResult = await profileGetByIdInteractor.getByIdProfile(profileId);
+
+		if ( Object.keys(getByIdResult).length === 0 ) {
+			throw errors.conflictError('The profile does not exists');
+		}
 
         response = successResponse.success('Successfully get profile by id.', getByIdResult);
 
